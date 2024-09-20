@@ -25,6 +25,8 @@ void setup() {
 /*
   in moving functions, will need to slow motors down when done with turning/moving
   could ramp up/down if using analog instead of digital (https://docs.arduino.cc/learn/electronics/transistor-motor-control/)
+  https://forum.arduino.cc/t/line-follower-robot-not-moving-forward/582416/5
+  https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 */
 
 //move left wheels forward and right wheels backwards
@@ -111,6 +113,10 @@ void moveForward() {
   //   digitalWrite(RB, x);
   //   delay(50);
   // }
+}
+
+void halt() {
+  Serial.write("stopping\n");
 }
 
 void loop() {
