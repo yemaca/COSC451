@@ -2,10 +2,8 @@
 #define RIGHT 2
 #define FRONT 3 //sensor positions
 #define LEFT 4
-#define LF 5
-#define LB 6    //motor positions
-#define RF 7    //(left front, left back, etc)
-#define RB 8
+#define RW 5
+#define LW 6    //wheel positions
 
 int R = 0;
 int L = 0;      //variables to store sensor readings
@@ -16,10 +14,8 @@ void setup() {
   pinMode(FRONT, INPUT);
   pinMode(RIGHT, INPUT);
   pinMode(LEFT, INPUT);
-  pinMode(LF, OUTPUT);
-  pinMode(LB, OUTPUT);
-  pinMode(RF, OUTPUT);
-  pinMode(RB, OUTPUT);
+  pinMode(RW, OUTPUT);
+  pinMode(LW, OUTPUT);
 }
 
 /*
@@ -29,28 +25,26 @@ void setup() {
   https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 */
 
+/*
+  for moving functions, need to add a delay between increasing & decreasing speeds so robot actually moves
+*/
+
 //move left wheels forward and right wheels backwards
 void turnRight() {
   Serial.write("turn right\n");
   
-  digitalWrite(LF, HIGH);
-  digitalWrite(LB, HIGH);
-  digitalWrite(RF, LOW);
-  digitalWrite(RB, LOW);
+  digitalWrite(LW, HIGH);
+  digitalWrite(RW, LOW);
 
   // for (int x = 1; x <= 255; x++) {
-  //   digitalWrite(LF, x);
-  //   digitalWrite(LB, x);
-  //   digitalWrite(RF, -x);
-  //   digitalWrite(RB, -x);
+  //   digitalWrite(LW, x);
+  //   digitalWrite(RW, -x);
   //   delay(50);
   // }
 
   // for (int x = 255; x <= 0; x--) {
-  //   digitalWrite(LF, x);
-  //   digitalWrite(LB, x);
-  //   digitalWrite(RF, -x);
-  //   digitalWrite(RB, -x);
+  //   digitalWrite(LW, x);
+  //   digitalWrite(RW, -x);
   //   delay(50);
   // }
 }
@@ -59,26 +53,8 @@ void turnRight() {
 void turnLeft() {
   Serial.write("turn left\n");
 
-  digitalWrite(LF, LOW);
-  digitalWrite(LB, LOW);
-  digitalWrite(RF, HIGH);
-  digitalWrite(RB, HIGH);
-
-  // for (int x = 1; x <= 255; x++) {
-  //   digitalWrite(LF, -x);
-  //   digitalWrite(LB, -x);
-  //   digitalWrite(RF, x);
-  //   digitalWrite(RB, x);
-  //   delay(50);
-  // }
-
-  // for (int x = 255; x <= 0; x--) {
-  //   digitalWrite(LF, -x);
-  //   digitalWrite(LB, -x);
-  //   digitalWrite(RF, x);
-  //   digitalWrite(RB, x);
-  //   delay(50);
-  // }
+  digitalWrite(LW, LOW);
+  digitalWrite(RW, HIGH);
 }
 
 //turn left twice to spin
@@ -93,30 +69,15 @@ void spin() {
 void moveForward() {
   Serial.write("move forward\n");
   
-  digitalWrite(LF, HIGH);
-  digitalWrite(LB, HIGH);
-  digitalWrite(RF, HIGH);
-  digitalWrite(RB, HIGH);
-
-  // for (int x = 1; x <= 255; x++) {
-  //   digitalWrite(LF, x);
-  //   digitalWrite(LB, x);
-  //   digitalWrite(RF, x);
-  //   digitalWrite(RB, x);
-  //   delay(50);
-  // }
-
-  // for (int x = 255; x <= 0; x--) {
-  //   digitalWrite(LF, x);
-  //   digitalWrite(LB, x);
-  //   digitalWrite(RF, x);
-  //   digitalWrite(RB, x);
-  //   delay(50);
-  // }
+  digitalWrite(LW, HIGH);
+  digitalWrite(RW, HIGH);
 }
 
 void halt() {
   Serial.write("stopping\n");
+
+  digitalWrite(LW, 0);
+  digitalWrite(RW, 0);
 }
 
 void loop() {
